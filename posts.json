@@ -1,0 +1,5 @@
+[
+  { "file": "post1.html", "title": "My First Blog Post" },
+  { "file": "post2.html", "title": "Learning JavaScript" },
+  { "file": "post3.html", "title": "Another Day, Another Post" }
+]

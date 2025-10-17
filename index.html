@@ -1,0 +1,59 @@
+<!-- This is my customized blog site -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ohn Doe's Coding Journey</title>
+        <link rel="stylesheet" href="css\styles.css" />
+    </head>
+    <body>
+        <header>
+            <h1>John Doe's Coding Journey</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <h1>Featured Posts</h1>
+        <div id="feed"></div>
+
+        <script>
+            async function loadFeed() {
+                try {
+                    // Load the manifest (list of posts)
+                    const response = await fetch("posts.json");
+                    const posts = await response.json();
+                    const feed = document.getElementById("feed");
+                    feed.innerHTML = "";
+
+                    for (const post of posts) {
+                        // Load each post file
+                        const res = await fetch(post.file);
+                        const html = await res.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, "text/html");
+                        const preview = doc.querySelector("p")?.textContent || "Read more...";
+                        const div = document.createElement("div");
+                        div.className = "post";
+                        div.innerHTML = `
+            <h2><a href="${post.file}">${post.title}</a></h2>
+            <p>${preview}</p>
+          `;
+                        feed.appendChild(div);
+                    }
+                } catch (err) {
+                    console.error("Error loading feed:", err);
+                }
+            }
+
+            loadFeed();
+        </script>
+        <footer>
+            <p>&copy; 2025 John Doe's Blog. All rights reserved.</p>
+        </footer>
+    </body>
+</html>
