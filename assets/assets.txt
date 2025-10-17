@@ -1,0 +1,1 @@
+This file if for documentation purposes of assets media such as images(png,jpg), videos, audios included in this web site.
